@@ -8,27 +8,18 @@ public class IList
         Descending
     }
 
-    public static void Main(string[] args)
-    {
-        DoublyLinkedList<int> listA = new DoublyLinkedList<int>();
-        listA.Insert(1);
-        listA.Insert(3);
-        listA.Insert(5);
-        listA.Insert(7);
-        listA.Insert(9);
-
-        DoublyLinkedList<int> listB = new DoublyLinkedList<int>();
-        listB.Insert(2);
-        listB.Insert(4);
-        listB.Insert(6);
-        listB.Insert(8);
-
-        DoublyLinkedList<int> listC = MergeSort(listA, listB, SortDirection.Ascending);
-        listC.Print();
-    }
+    public static void Main(string[] args) { }
 
     public static DoublyLinkedList<int> Invert(DoublyLinkedList<int> List)
     {
+        if (List == null)
+        {
+            throw new NullReferenceException("The list is null");
+        } else if (List.Count == 0)
+        {
+            throw new InvalidOperationException("The list is empty");
+        }
+
         Node<int> Aux = List.Head;
         List.Head = List.Tail;
         List.Tail = Aux;
@@ -45,6 +36,14 @@ public class IList
 
     public static DoublyLinkedList<int> MergeSort(DoublyLinkedList<int> ListA, DoublyLinkedList<int> ListB, SortDirection direction)
     {
+        if (ListA == null || ListB == null)
+        {
+            throw new NullReferenceException("One of the lists is null");
+        } else if (ListA.Count == 0 || ListB.Count == 0)
+        {
+            throw new InvalidOperationException("One of the lists is empty");
+        }
+
         if (direction == SortDirection.Ascending)
         {
             ListA = MergeSortAscending(ListA, ListB);
@@ -129,6 +128,11 @@ public class IList
 
     public static int GetMiddle(DoublyLinkedList<int> List)
     {
+        if (List.Count == 0 || List == null)
+        {
+            throw new InvalidOperationException("The list is empty");
+        }
+
         return List.Middle.Value;
     }
 
@@ -157,7 +161,7 @@ public class DoublyLinkedList<T>
             NewNode.Previous = Tail;
             Tail = NewNode;
             // Set middle without iterating the list
-            if (Count % 2 == 0)
+            if (Count % 2 == 1)
             {
                 Middle = Middle.Next;
             }
